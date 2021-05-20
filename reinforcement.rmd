@@ -1,0 +1,269 @@
+---
+title: "reinforcement_learning"
+author: "Morten Gade"
+date: "18/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+
+# FILL THIS OUT
+
+nodes_ABM <- read.csv("abm_filer/nodes_likes1follow1.csv")
+no_ticks <- 409
+
+```
+
+```{r}
+
+nodes_40 <- nodes_ABM %>% slice(1:40)
+nodes_40 <- nodes_40 %>% mutate(
+  
+  LIKE.LIST = gsub(" ",",", LIKE.LIST),
+  LIKE.LIST = gsub("\\[","", LIKE.LIST),
+  LIKE.LIST = gsub("\\]","", LIKE.LIST),
+  POST.LIST = gsub(" ",",", POST.LIST),
+  POST.LIST = gsub("\\[","", POST.LIST),
+  POST.LIST = gsub("\\]","", POST.LIST),
+  WHO.LIST = gsub(" ",",", WHO.LIST),
+  WHO.LIST = gsub("\\[","", WHO.LIST),
+  WHO.LIST = gsub("\\]","", WHO.LIST),
+  FOLLOWER.LIST = gsub(" ",",", FOLLOWER.LIST),
+  FOLLOWER.LIST = gsub("\\[","", FOLLOWER.LIST),
+  FOLLOWER.LIST = gsub("\\]","", FOLLOWER.LIST),
+  
+)
+ 
+like_0 <- as.numeric(str_split(nodes_40$LIKE.LIST[1], ",", simplify = TRUE))
+like_1 <- as.numeric(str_split(nodes_40$LIKE.LIST[2], ",", simplify = TRUE))
+like_2 <- as.numeric(str_split(nodes_40$LIKE.LIST[3], ",", simplify = TRUE))
+like_3 <- as.numeric(str_split(nodes_40$LIKE.LIST[4], ",", simplify = TRUE))
+like_4 <- as.numeric(str_split(nodes_40$LIKE.LIST[5], ",", simplify = TRUE))
+like_5 <- as.numeric(str_split(nodes_40$LIKE.LIST[6], ",", simplify = TRUE))
+like_6 <- as.numeric(str_split(nodes_40$LIKE.LIST[7], ",", simplify = TRUE))
+like_7 <- as.numeric(str_split(nodes_40$LIKE.LIST[8], ",", simplify = TRUE))
+like_8 <- as.numeric(str_split(nodes_40$LIKE.LIST[9], ",", simplify = TRUE))
+like_9 <- as.numeric(str_split(nodes_40$LIKE.LIST[10], ",", simplify = TRUE))
+like_10 <- as.numeric(str_split(nodes_40$LIKE.LIST[11], ",", simplify = TRUE))
+like_11 <- as.numeric(str_split(nodes_40$LIKE.LIST[12], ",", simplify = TRUE))
+like_12 <- as.numeric(str_split(nodes_40$LIKE.LIST[13], ",", simplify = TRUE))
+like_13 <- as.numeric(str_split(nodes_40$LIKE.LIST[14], ",", simplify = TRUE))
+like_14 <- as.numeric(str_split(nodes_40$LIKE.LIST[15], ",", simplify = TRUE))
+like_15 <- as.numeric(str_split(nodes_40$LIKE.LIST[16], ",", simplify = TRUE))
+like_16 <- as.numeric(str_split(nodes_40$LIKE.LIST[17], ",", simplify = TRUE))
+like_17 <- as.numeric(str_split(nodes_40$LIKE.LIST[18], ",", simplify = TRUE))
+like_18 <- as.numeric(str_split(nodes_40$LIKE.LIST[19], ",", simplify = TRUE))
+like_19 <- as.numeric(str_split(nodes_40$LIKE.LIST[20], ",", simplify = TRUE))
+like_20 <- as.numeric(str_split(nodes_40$LIKE.LIST[21], ",", simplify = TRUE))
+like_21 <- as.numeric(str_split(nodes_40$LIKE.LIST[22], ",", simplify = TRUE))
+like_22 <- as.numeric(str_split(nodes_40$LIKE.LIST[23], ",", simplify = TRUE))
+like_23 <- as.numeric(str_split(nodes_40$LIKE.LIST[24], ",", simplify = TRUE))
+like_24 <- as.numeric(str_split(nodes_40$LIKE.LIST[25], ",", simplify = TRUE))
+like_25 <- as.numeric(str_split(nodes_40$LIKE.LIST[26], ",", simplify = TRUE))
+like_26 <- as.numeric(str_split(nodes_40$LIKE.LIST[27], ",", simplify = TRUE))
+like_27 <- as.numeric(str_split(nodes_40$LIKE.LIST[28], ",", simplify = TRUE))
+like_28 <- as.numeric(str_split(nodes_40$LIKE.LIST[29], ",", simplify = TRUE))
+like_29 <- as.numeric(str_split(nodes_40$LIKE.LIST[30], ",", simplify = TRUE))
+like_30 <- as.numeric(str_split(nodes_40$LIKE.LIST[31], ",", simplify = TRUE))
+like_31 <- as.numeric(str_split(nodes_40$LIKE.LIST[32], ",", simplify = TRUE))
+like_32 <- as.numeric(str_split(nodes_40$LIKE.LIST[33], ",", simplify = TRUE))
+like_33 <- as.numeric(str_split(nodes_40$LIKE.LIST[34], ",", simplify = TRUE))
+like_34 <- as.numeric(str_split(nodes_40$LIKE.LIST[35], ",", simplify = TRUE))
+like_35 <- as.numeric(str_split(nodes_40$LIKE.LIST[36], ",", simplify = TRUE))
+like_36 <- as.numeric(str_split(nodes_40$LIKE.LIST[37], ",", simplify = TRUE))
+like_37 <- as.numeric(str_split(nodes_40$LIKE.LIST[38], ",", simplify = TRUE))
+like_38 <- as.numeric(str_split(nodes_40$LIKE.LIST[39], ",", simplify = TRUE))
+like_39 <- as.numeric(str_split(nodes_40$LIKE.LIST[40], ",", simplify = TRUE))
+
+follow_0 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[1], ",", simplify = TRUE))
+follow_1 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[2], ",", simplify = TRUE))
+follow_2 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[3], ",", simplify = TRUE))
+follow_3 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[4], ",", simplify = TRUE))
+follow_4 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[5], ",", simplify = TRUE))
+follow_5 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[6], ",", simplify = TRUE))
+follow_6 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[7], ",", simplify = TRUE))
+follow_7 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[8], ",", simplify = TRUE))
+follow_8 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[9], ",", simplify = TRUE))
+follow_9 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[10], ",", simplify = TRUE))
+follow_10 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[11], ",", simplify = TRUE))
+follow_11 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[12], ",", simplify = TRUE))
+follow_12 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[13], ",", simplify = TRUE))
+follow_13 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[14], ",", simplify = TRUE))
+follow_14 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[15], ",", simplify = TRUE))
+follow_15 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[16], ",", simplify = TRUE))
+follow_16 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[17], ",", simplify = TRUE))
+follow_17 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[18], ",", simplify = TRUE))
+follow_18 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[19], ",", simplify = TRUE))
+follow_19 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[20], ",", simplify = TRUE))
+follow_20 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[21], ",", simplify = TRUE))
+follow_21 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[22], ",", simplify = TRUE))
+follow_22 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[23], ",", simplify = TRUE))
+follow_23 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[24], ",", simplify = TRUE))
+follow_24 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[25], ",", simplify = TRUE))
+follow_25 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[26], ",", simplify = TRUE))
+follow_26 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[27], ",", simplify = TRUE))
+follow_27 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[28], ",", simplify = TRUE))
+follow_28 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[29], ",", simplify = TRUE))
+follow_29 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[30], ",", simplify = TRUE))
+follow_30 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[31], ",", simplify = TRUE))
+follow_31 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[32], ",", simplify = TRUE))
+follow_32 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[33], ",", simplify = TRUE))
+follow_33 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[34], ",", simplify = TRUE))
+follow_34 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[35], ",", simplify = TRUE))
+follow_35 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[36], ",", simplify = TRUE))
+follow_36 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[37], ",", simplify = TRUE))
+follow_37 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[38], ",", simplify = TRUE))
+follow_38 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[39], ",", simplify = TRUE))
+follow_39 <- as.numeric(str_split(nodes_40$FOLLOWER.LIST[40], ",", simplify = TRUE))
+
+post_0 <- as.numeric(str_split(nodes_40$POST.LIST[1], ",", simplify = TRUE))
+post_1 <- as.numeric(str_split(nodes_40$POST.LIST[2], ",", simplify = TRUE))
+post_2 <- as.numeric(str_split(nodes_40$POST.LIST[3], ",", simplify = TRUE))
+post_3 <- as.numeric(str_split(nodes_40$POST.LIST[4], ",", simplify = TRUE))
+post_4 <- as.numeric(str_split(nodes_40$POST.LIST[5], ",", simplify = TRUE))
+post_5 <- as.numeric(str_split(nodes_40$POST.LIST[6], ",", simplify = TRUE))
+post_6 <- as.numeric(str_split(nodes_40$POST.LIST[7], ",", simplify = TRUE))
+post_7 <- as.numeric(str_split(nodes_40$POST.LIST[8], ",", simplify = TRUE))
+post_8 <- as.numeric(str_split(nodes_40$POST.LIST[9], ",", simplify = TRUE))
+post_9 <- as.numeric(str_split(nodes_40$POST.LIST[10], ",", simplify = TRUE))
+post_10 <- as.numeric(str_split(nodes_40$POST.LIST[11], ",", simplify = TRUE))
+post_11 <- as.numeric(str_split(nodes_40$POST.LIST[12], ",", simplify = TRUE))
+post_12 <- as.numeric(str_split(nodes_40$POST.LIST[13], ",", simplify = TRUE))
+post_13 <- as.numeric(str_split(nodes_40$POST.LIST[14], ",", simplify = TRUE))
+post_14 <- as.numeric(str_split(nodes_40$POST.LIST[15], ",", simplify = TRUE))
+post_15 <- as.numeric(str_split(nodes_40$POST.LIST[16], ",", simplify = TRUE))
+post_16 <- as.numeric(str_split(nodes_40$POST.LIST[17], ",", simplify = TRUE))
+post_17 <- as.numeric(str_split(nodes_40$POST.LIST[18], ",", simplify = TRUE))
+post_18 <- as.numeric(str_split(nodes_40$POST.LIST[19], ",", simplify = TRUE))
+post_19 <- as.numeric(str_split(nodes_40$POST.LIST[20], ",", simplify = TRUE))
+post_20 <- as.numeric(str_split(nodes_40$POST.LIST[1], ",", simplify = TRUE))
+post_21 <- as.numeric(str_split(nodes_40$POST.LIST[2], ",", simplify = TRUE))
+post_22 <- as.numeric(str_split(nodes_40$POST.LIST[3], ",", simplify = TRUE))
+post_23 <- as.numeric(str_split(nodes_40$POST.LIST[4], ",", simplify = TRUE))
+post_24 <- as.numeric(str_split(nodes_40$POST.LIST[5], ",", simplify = TRUE))
+post_25 <- as.numeric(str_split(nodes_40$POST.LIST[6], ",", simplify = TRUE))
+post_26 <- as.numeric(str_split(nodes_40$POST.LIST[7], ",", simplify = TRUE))
+post_27 <- as.numeric(str_split(nodes_40$POST.LIST[8], ",", simplify = TRUE))
+post_28 <- as.numeric(str_split(nodes_40$POST.LIST[9], ",", simplify = TRUE))
+post_29 <- as.numeric(str_split(nodes_40$POST.LIST[10], ",", simplify = TRUE))
+post_30 <- as.numeric(str_split(nodes_40$POST.LIST[11], ",", simplify = TRUE))
+post_31 <- as.numeric(str_split(nodes_40$POST.LIST[12], ",", simplify = TRUE))
+post_32 <- as.numeric(str_split(nodes_40$POST.LIST[13], ",", simplify = TRUE))
+post_33 <- as.numeric(str_split(nodes_40$POST.LIST[14], ",", simplify = TRUE))
+post_34 <- as.numeric(str_split(nodes_40$POST.LIST[15], ",", simplify = TRUE))
+post_35 <- as.numeric(str_split(nodes_40$POST.LIST[16], ",", simplify = TRUE))
+post_36 <- as.numeric(str_split(nodes_40$POST.LIST[17], ",", simplify = TRUE))
+post_37 <- as.numeric(str_split(nodes_40$POST.LIST[18], ",", simplify = TRUE))
+post_38 <- as.numeric(str_split(nodes_40$POST.LIST[19], ",", simplify = TRUE))
+post_39 <- as.numeric(str_split(nodes_40$POST.LIST[20], ",", simplify = TRUE))
+
+who_0 <- as.numeric(str_split(nodes_40$WHO.LIST[1], ",", simplify = TRUE))
+who_1 <- as.numeric(str_split(nodes_40$WHO.LIST[2], ",", simplify = TRUE))
+who_2 <- as.numeric(str_split(nodes_40$WHO.LIST[3], ",", simplify = TRUE))
+who_3 <- as.numeric(str_split(nodes_40$WHO.LIST[4], ",", simplify = TRUE))
+who_4 <- as.numeric(str_split(nodes_40$WHO.LIST[5], ",", simplify = TRUE))
+who_5 <- as.numeric(str_split(nodes_40$WHO.LIST[6], ",", simplify = TRUE))
+who_6 <- as.numeric(str_split(nodes_40$WHO.LIST[7], ",", simplify = TRUE))
+who_7 <- as.numeric(str_split(nodes_40$WHO.LIST[8], ",", simplify = TRUE))
+who_8 <- as.numeric(str_split(nodes_40$WHO.LIST[9], ",", simplify = TRUE))
+who_9 <- as.numeric(str_split(nodes_40$WHO.LIST[10], ",", simplify = TRUE))
+who_10 <- as.numeric(str_split(nodes_40$WHO.LIST[11], ",", simplify = TRUE))
+who_11 <- as.numeric(str_split(nodes_40$WHO.LIST[12], ",", simplify = TRUE))
+who_12 <- as.numeric(str_split(nodes_40$WHO.LIST[13], ",", simplify = TRUE))
+who_13 <- as.numeric(str_split(nodes_40$WHO.LIST[14], ",", simplify = TRUE))
+who_14 <- as.numeric(str_split(nodes_40$WHO.LIST[15], ",", simplify = TRUE))
+who_15 <- as.numeric(str_split(nodes_40$WHO.LIST[16], ",", simplify = TRUE))
+who_16 <- as.numeric(str_split(nodes_40$WHO.LIST[17], ",", simplify = TRUE))
+who_17 <- as.numeric(str_split(nodes_40$WHO.LIST[18], ",", simplify = TRUE))
+who_18 <- as.numeric(str_split(nodes_40$WHO.LIST[19], ",", simplify = TRUE))
+who_19 <- as.numeric(str_split(nodes_40$WHO.LIST[20], ",", simplify = TRUE))
+who_20 <- as.numeric(str_split(nodes_40$WHO.LIST[21], ",", simplify = TRUE))
+who_21 <- as.numeric(str_split(nodes_40$WHO.LIST[22], ",", simplify = TRUE))
+who_22 <- as.numeric(str_split(nodes_40$WHO.LIST[23], ",", simplify = TRUE))
+who_23 <- as.numeric(str_split(nodes_40$WHO.LIST[24], ",", simplify = TRUE))
+who_24 <- as.numeric(str_split(nodes_40$WHO.LIST[25], ",", simplify = TRUE))
+who_25 <- as.numeric(str_split(nodes_40$WHO.LIST[26], ",", simplify = TRUE))
+who_26 <- as.numeric(str_split(nodes_40$WHO.LIST[27], ",", simplify = TRUE))
+who_27 <- as.numeric(str_split(nodes_40$WHO.LIST[28], ",", simplify = TRUE))
+who_28 <- as.numeric(str_split(nodes_40$WHO.LIST[29], ",", simplify = TRUE))
+who_29 <- as.numeric(str_split(nodes_40$WHO.LIST[30], ",", simplify = TRUE))
+who_30 <- as.numeric(str_split(nodes_40$WHO.LIST[31], ",", simplify = TRUE))
+who_31 <- as.numeric(str_split(nodes_40$WHO.LIST[32], ",", simplify = TRUE))
+who_32 <- as.numeric(str_split(nodes_40$WHO.LIST[33], ",", simplify = TRUE))
+who_33 <- as.numeric(str_split(nodes_40$WHO.LIST[34], ",", simplify = TRUE))
+who_34 <- as.numeric(str_split(nodes_40$WHO.LIST[35], ",", simplify = TRUE))
+who_35 <- as.numeric(str_split(nodes_40$WHO.LIST[36], ",", simplify = TRUE))
+who_36 <- as.numeric(str_split(nodes_40$WHO.LIST[37], ",", simplify = TRUE))
+who_37 <- as.numeric(str_split(nodes_40$WHO.LIST[38], ",", simplify = TRUE))
+who_38 <- as.numeric(str_split(nodes_40$WHO.LIST[39], ",", simplify = TRUE))
+who_39 <- as.numeric(str_split(nodes_40$WHO.LIST[40], ",", simplify = TRUE))
+
+turtle_0 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_0, "post_ticks" = post_0, "likes" = like_0, "followers" = follow_0)
+turtle_1 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_1, "post_ticks" = post_1, "likes" = like_1, "followers" = follow_1)
+turtle_2 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_2, "post_ticks" = post_2, "likes" = like_2, "followers" = follow_2)
+turtle_3 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_3, "post_ticks" = post_3, "likes" = like_3, "followers" = follow_3)
+turtle_4 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_4, "post_ticks" = post_4, "likes" = like_4, "followers" = follow_4)
+turtle_5 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_5, "post_ticks" = post_5, "likes" = like_5, "followers" = follow_5)
+turtle_6 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_6, "post_ticks" = post_6, "likes" = like_6, "followers" = follow_6)
+turtle_7 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_7, "post_ticks" = post_7, "likes" = like_7, "followers" = follow_7)
+turtle_8 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_8, "post_ticks" = post_8, "likes" = like_8, "followers" = follow_8)
+turtle_9 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_9, "post_ticks" = post_9, "likes" = like_9, "followers" = follow_9)
+turtle_10 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_10, "post_ticks" = post_10, "likes" = like_10, "followers" = follow_10)
+turtle_11 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_11, "post_ticks" = post_11, "likes" = like_11, "followers" = follow_11)
+turtle_12 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_12, "post_ticks" = post_12, "likes" = like_12, "followers" = follow_12)
+turtle_13 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_13, "post_ticks" = post_13, "likes" = like_13, "followers" = follow_13)
+turtle_14 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_14, "post_ticks" = post_14, "likes" = like_14, "followers" = follow_14)
+turtle_15 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_15, "post_ticks" = post_15, "likes" = like_15, "followers" = follow_15)
+turtle_16 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_16, "post_ticks" = post_16, "likes" = like_16, "followers" = follow_16)
+turtle_17 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_17, "post_ticks" = post_17, "likes" = like_17, "followers" = follow_17)
+turtle_18 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_18, "post_ticks" = post_18, "likes" = like_18, "followers" = follow_18)
+turtle_19 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_19, "post_ticks" = post_19, "likes" = like_19, "followers" = follow_19)
+turtle_20 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_0, "post_ticks" = post_0, "likes" = like_0, "followers" = follow_0)
+turtle_21 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_1, "post_ticks" = post_1, "likes" = like_1, "followers" = follow_1)
+turtle_22 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_2, "post_ticks" = post_2, "likes" = like_2, "followers" = follow_2)
+turtle_23 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_3, "post_ticks" = post_3, "likes" = like_3, "followers" = follow_3)
+turtle_24 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_4, "post_ticks" = post_4, "likes" = like_4, "followers" = follow_4)
+turtle_25 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_5, "post_ticks" = post_5, "likes" = like_5, "followers" = follow_5)
+turtle_26 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_6, "post_ticks" = post_6, "likes" = like_6, "followers" = follow_6)
+turtle_27 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_7, "post_ticks" = post_7, "likes" = like_7, "followers" = follow_7)
+turtle_28 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_8, "post_ticks" = post_8, "likes" = like_8, "followers" = follow_8)
+turtle_29 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_9, "post_ticks" = post_9, "likes" = like_9, "followers" = follow_9)
+turtle_30 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_10, "post_ticks" = post_10, "likes" = like_10, "followers" = follow_10)
+turtle_31 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_11, "post_ticks" = post_11, "likes" = like_11, "followers" = follow_11)
+turtle_32 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_12, "post_ticks" = post_12, "likes" = like_12, "followers" = follow_12)
+turtle_33 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_13, "post_ticks" = post_13, "likes" = like_13, "followers" = follow_13)
+turtle_34 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_14, "post_ticks" = post_14, "likes" = like_14, "followers" = follow_14)
+turtle_35 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_15, "post_ticks" = post_15, "likes" = like_15, "followers" = follow_15)
+turtle_36 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_16, "post_ticks" = post_16, "likes" = like_16, "followers" = follow_16)
+turtle_37 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_17, "post_ticks" = post_17, "likes" = like_17, "followers" = follow_17)
+turtle_38 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_18, "post_ticks" = post_18, "likes" = like_18, "followers" = follow_18)
+turtle_39 <- data.frame("tick" = rep(1:no_ticks,1), "id" = who_19, "post_ticks" = post_19, "likes" = like_19, "followers" = follow_19)
+
+
+turtles <- rbind(turtle_0, turtle_1, turtle_2, turtle_3, turtle_4, turtle_5, turtle_6, turtle_7, turtle_8, turtle_9, turtle_10, turtle_11, turtle_12, turtle_13, turtle_14, turtle_15, turtle_16, turtle_17, turtle_18, turtle_19)
+
+turtles$posted <- ifelse(turtles$id == lag(turtles$id), ifelse(turtles$post_ticks == lag(turtles$post_ticks), 0, 1), 1)
+turtles <- turtles %>% filter(posted == 1)
+turtles$lag_likes <- lag(turtles$likes)
+turtles$latency <- ifelse(turtles$id == lag(turtles$id), turtles$tick - lag(turtles$tick), 0)
+
+ggplot(turtles, aes(x=lag_likes, y=latency)) + 
+  theme_linedraw() +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+m1 <- lm(latency ~ lag_likes, data = turtles)
+summary(m1)
+
+```
+

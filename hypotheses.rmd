@@ -1,0 +1,439 @@
+---
+title: "0-trans"
+author: "Morten Gade"
+date: "19/5/2021"
+output: html_document
+---
+
+```{r cars}
+
+likes1follow0 <- read.csv("~/sockult_exam/abm_filer/edges_likes1follow0.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes0follow1 <- read.csv("~/sockult_exam/abm_filer/edges_like0follow1denderligenrdenmedto1.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes1follow1 <- read.csv("~/sockult_exam/abm_filer/edges_likes1follow1.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes10follow0 <- read.csv("~/sockult_exam/abm_filer/edges_likes10follow0.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes100follow0 <- read.csv("~/sockult_exam/abm_filer/edges_likes100follow0.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes1follow10 <- read.csv("~/sockult_exam/abm_filer/edges_likes1follow10.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes1follow100 <- read.csv("~/sockult_exam/abm_filer/edges_likes1follow100.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+likes1follow1_new <- read.csv("~/sockult_exam/abm_filer/edges_likes1follow1_new.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+
+
+
+likes1follow0_ID <- data.frame(ID=unique(c(likes1follow0$from, likes1follow0$to)))
+likes0follow1_ID <- data.frame(ID=unique(c(likes0follow1$from, likes0follow1$to)))
+likes1follow1_ID <- data.frame(ID=unique(c(likes1follow1$from, likes1follow1$to)))
+likes10follow0_ID <- data.frame(ID=unique(c(likes10follow0$from, likes10follow0$to)))
+likes100follow0_ID <- data.frame(ID=unique(c(likes100follow0$from, likes100follow0$to)))
+likes1follow10_ID <- data.frame(ID=unique(c(likes1follow10$from, likes1follow10$to)))
+likes1follow100_ID <- data.frame(ID=unique(c(likes1follow100$from, likes1follow100$to)))
+likes1follow1_new_ID <- data.frame(ID=unique(c(likes1follow1_new$from, likes1follow1_new$to)))
+
+likes1follow0_igraph <-
+  graph_from_data_frame(d = likes1follow0,
+                        vertices = likes1follow0_ID,
+                        directed = TRUE)
+
+likes0follow1_igraph <-
+  graph_from_data_frame(d = likes0follow1,
+                        vertices = likes0follow1_ID,
+                        directed = TRUE)
+
+likes1follow1_igraph <-
+  graph_from_data_frame(d = likes1follow1,
+                        vertices = likes1follow1_ID,
+                        directed = TRUE)
+
+likes10follow0_igraph <-
+  graph_from_data_frame(d = likes10follow0,
+                        vertices = likes10follow0_ID,
+                        directed = TRUE)
+
+likes100follow0_igraph <-
+  graph_from_data_frame(d = likes100follow0,
+                        vertices = likes100follow0_ID,
+                        directed = TRUE)
+
+likes1follow10_igraph <-
+  graph_from_data_frame(d = likes1follow10,
+                        vertices = likes1follow10_ID,
+                        directed = TRUE)
+
+likes1follow100_igraph <-
+  graph_from_data_frame(d = likes1follow100,
+                        vertices = likes1follow100_ID,
+                        directed = TRUE)
+
+likes1follow1_new_igraph <-
+  graph_from_data_frame(d = likes1follow1_new,
+                        vertices = likes1follow1_new_ID,
+                        directed = TRUE)
+
+
+```
+
+
+```{r pressure, echo=FALSE}
+
+# average degree
+mean(igraph::degree(likes0follow1_igraph, mode = "in"))
+mean(igraph::degree(likes1follow0_igraph, mode = "in"))
+mean(igraph::degree(likes1follow1_igraph, mode = "in"))
+mean(igraph::degree(likes10follow0_igraph, mode = "in"))
+mean(igraph::degree(likes100follow0_igraph, mode = "in"))
+mean(igraph::degree(likes1follow10_igraph, mode = "in"))
+mean(igraph::degree(likes1follow100_igraph, mode = "in"))
+mean(igraph::degree(likes1follow1_new_igraph, mode = "in"))
+
+# quantiles
+quantile(igraph::degree(likes0follow1_igraph, mode = "in"))
+quantile(igraph::degree(likes1follow0_igraph, mode = "in"))
+quantile(igraph::degree(likes1follow1_igraph, mode = "in"))
+quantile(igraph::degree(likes10follow0_igraph, mode = "in"))
+quantile(igraph::degree(likes100follow0_igraph, mode = "in"))
+quantile(igraph::degree(likes1follow10_igraph, mode = "in"))
+quantile(igraph::degree(likes1follow100_igraph, mode = "in"))
+quantile(igraph::degree(likes1follow1_new_igraph, mode = "in"))
+
+# Avg. Path length 
+mean_distance(likes0follow1_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes1follow0_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes1follow1_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes10follow0_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes100follow0_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes1follow10_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes1follow100_igraph, directed = TRUE, unconnected = TRUE)
+mean_distance(likes1follow1_new_igraph, directed = TRUE, unconnected = TRUE)
+
+# transivity - how likely is it that a node is connected to its neighbor?
+transitivity(likes0follow1_igraph, type = "average")
+transitivity(likes1follow0_igraph, type = "average")
+transitivity(likes1follow1_igraph, type = "average")
+transitivity(likes10follow0_igraph, type = "average")
+transitivity(likes100follow0_igraph, type = "average")
+transitivity(likes1follow10_igraph, type = "average")
+transitivity(likes1follow100_igraph, type = "average")
+transitivity(likes1follow1_new_igraph, type = "average")
+
+# eigen centrality - influence of a node in the network (connections to nodes with high influence weighted higher)
+mean(eigen_centrality(likes0follow1_igraph)$vector, directed = T)
+mean(eigen_centrality(likes1follow0_igraph)$vector, directed = T)
+mean(eigen_centrality(likes1follow1_igraph)$vector, directed = T)
+mean(eigen_centrality(likes10follow0_igraph)$vector, directed = T)
+mean(eigen_centrality(likes100follow0_igraph)$vector, directed = T)
+mean(eigen_centrality(likes1follow10_igraph)$vector, directed = T)
+mean(eigen_centrality(likes1follow100_igraph)$vector, directed = T)
+mean(eigen_centrality(likes1follow1_new_igraph)$vector, directed = T)
+
+# reciprocity
+reciprocity(likes0follow1_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes1follow0_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes1follow1_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes10follow0_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes100follow0_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes1follow10_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes1follow100_igraph, ignore.loops = TRUE, mode = "default")
+reciprocity(likes1follow1_new_igraph, ignore.loops = TRUE, mode = "default")
+
+```
+
+```{r}
+
+deg_likes0follow1 <- data.frame("degrees_in"=degree(likes0follow1_igraph, mode = "in"))
+deg_likes1follow0 <- data.frame("degrees_in"=degree(likes1follow0_igraph, mode = "in"))
+deg_likes1follow1 <- data.frame("degrees_in"=degree(likes1follow1_igraph, mode = "in"))
+deg_likes1follow1_new <- data.frame("degrees_in"=degree(likes1follow1_new_igraph, mode = "in"))
+
+ggplot(deg_likes0follow1, aes(x=degrees_in)) + 
+  geom_density() +
+  theme_linedraw() +
+  xlab("Degrees In") +
+  ylab("Density") +
+  ggtitle("Likes: 0    Follow: 1") +
+  ggsave("likes0follow1.png", width = 8, height = 5)
+
+ggplot(data, aes(x=degrees_in)) + 
+  geom_density() +
+  theme_linedraw() +
+  xlab("Degrees In") +
+  ylab("Density") +
+  ggtitle("Likes: 0    Follow: 1") +
+  ggsave("likes0follow1.png", width = 8, height = 5)
+
+ggplot(deg_likes1follow0, aes(x=degrees_in)) + 
+  geom_density() +
+  theme_linedraw() +
+  xlab("Degrees In") +
+  ylab("Density") +
+  ggtitle("Likes: 1    Follow: 0") +
+  ggsave("likes1follow0.png", width = 8, height = 5)
+
+ggplot(deg_likes1follow1, aes(x=degrees_in)) + 
+  geom_density() +
+  theme_linedraw() +
+  xlab("Degrees In") +
+  ylab("Density") +
+  ggtitle("Likes: 1    Follow: 1") +
+  ggsave("likes1follow1.png", width = 8, height = 5)
+
+ggplot(deg_likes1follow1_new, aes(x=degrees_in)) + 
+  geom_density() +
+  theme_linedraw() +
+  xlab("Degrees In") +
+  ylab("Density") +
+  ggtitle("Likes: 1    Follow: 1") +
+  ggsave("likes1follow1.png", width = 8, height = 5)
+
+
+```
+
+```{r}
+
+# calculating uniformity of traits
+
+nodes_likes1follow0 <- read.csv("~/sockult_exam/abm_filer/nodes_likes1follow0.csv")
+nodes_likes1follow10 <- read.csv("~/sockult_exam/abm_filer/nodes_likes1follow10.csv")
+nodes_likes1follow100 <- read.csv("~/sockult_exam/abm_filer/nodes_likes1follow100.csv")
+nodes_likes1follow1 <- read.csv("~/sockult_exam/abm_filer/nodes_likes1follow1.csv")
+nodes_likes1follow100_part2 <- read.csv("~/sockult_exam/abm_filer/nodes_likes1follow100_part2.csv")
+nodes_likes10follow0 <- read.csv("~/sockult_exam/abm_filer/nodes_likes10follow0.csv")
+nodes_likes100follow0 <- read.csv("~/sockult_exam/abm_filer/nodes_likes100follow0.csv")
+nodes_likes0follow0 <- read.csv("~/sockult_exam/abm_filer/nodes_likes0follow0.csv")
+
+
+t1lf0_l1 <- data.frame("trait" = nodes_likes1follow0$TRAIT1, "condition" = "like1")
+t1lf0_l10 <- data.frame("trait" = nodes_likes10follow0$TRAIT1, "condition" = "like10")
+t1lf0_l1100 <- data.frame("trait" = nodes_likes100follow0$TRAIT1, "condition" = "like100")
+t2lf0_l1 <- data.frame("trait" = nodes_likes1follow0$TRAIT2, "condition" = "like1")
+t2lf0_l10 <- data.frame("trait" = nodes_likes10follow0$TRAIT2, "condition" = "like10")
+t2lf0_l1100 <- data.frame("trait" = nodes_likes100follow0$TRAIT2, "condition" = "like100")
+
+
+t1f0 <- data.frame("trait" = nodes_likes1follow0$TRAIT1, "condition" = "follow0")
+t2f0 <- data.frame("trait" = nodes_likes1follow0$TRAIT2, "condition" = "follow1")
+t1f1 <- data.frame("trait" = nodes_likes1follow1$TRAIT1, "condition" = "follow1")
+t2f1 <- data.frame("trait" = nodes_likes1follow1$TRAIT2, "condition" = "follow1")
+t1f10 <- data.frame("trait" = nodes_likes1follow10$TRAIT1, "condition" = "follow10")
+t2f10 <- data.frame("trait" = nodes_likes1follow10$TRAIT2, "condition" = "follow10")
+t1f100 <- data.frame("trait" = nodes_likes1follow100$TRAIT1, "condition" = "follow100")
+t2f100 <- data.frame("trait" = nodes_likes1follow100$TRAIT2, "condition" = "follow100")
+t1f100_2 <- data.frame("trait" = nodes_likes1follow100_part2$TRAIT2, "condition" = "follow100_2")
+t2f100_2 <- data.frame("trait" = nodes_likes1follow100_part2$TRAIT2, "condition" = "follow100_2")
+
+traits_follow <- rbind(t1f0, t2f0, t1f1, t2f1, t1f10, t2f10)
+traits_like <- rbind(t1lf0_l1, t1lf0_l10, t1lf0_l1100, t2lf0_l1, t2lf0_l10, t2lf0_l1100)
+
+trait1_df <- rbind(t1f0, t1f1, t1f10, t1f100)
+trait2_df <- rbind(t2f0, t2f1, t2f10, t2f100)
+
+traits_df <- data.frame("trait1_follow10" = nodes_likes1follow10$TRAIT1,"trait2_follow10" = nodes_likes1follow10$TRAIT2, "trait1_follow100" = nodes_likes1follow100$TRAIT1,"trait2_follow100" = nodes_likes1follow100$TRAIT2)
+
+
+ggplot() + 
+  geom_density(data=traits_follow, aes(x=trait, group=condition, fill=condition),alpha=0.5, adjust=2) + 
+  xlab("Trait Scores") +
+  ylab("Density") +
+  theme_linedraw() +
+  xlim(0, 100)
+
+
+ggplot() + 
+  geom_density(data=traits_like, aes(x=trait, group=condition, fill=condition),alpha=0.5, adjust=2) + 
+  xlab("Trait Scores") +
+  ylab("Density") +
+  theme_linedraw() +
+  xlim(0, 100)
+
+```
+
+```{r}
+
+# Testing effect of follow-value
+
+follow0.1 <- read.csv("~/sockult_exam/abm_igen/edges_01.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.2 <- read.csv("~/sockult_exam/abm_igen/edges_02.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.3 <- read.csv("~/sockult_exam/abm_igen/edges_03.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.4 <- read.csv("~/sockult_exam/abm_igen/edges_04.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.5 <- read.csv("~/sockult_exam/abm_igen/edges_05.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.6 <- read.csv("~/sockult_exam/abm_igen/edges_06.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.7 <- read.csv("~/sockult_exam/abm_igen/edges_06.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.8 <- read.csv("~/sockult_exam/abm_igen/edges_07.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+follow0.9 <- read.csv("~/sockult_exam/abm_igen/edges_08.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+follow0.1_ID <- data.frame(ID=unique(c(follow0.1$from, follow0.1$to)))
+follow0.2_ID <- data.frame(ID=unique(c(follow0.2$from, follow0.2$to)))
+follow0.3_ID <- data.frame(ID=unique(c(follow0.3$from, follow0.3$to)))
+follow0.4_ID <- data.frame(ID=unique(c(follow0.4$from, follow0.4$to)))
+follow0.5_ID <- data.frame(ID=unique(c(follow0.5$from, follow0.5$to)))
+follow0.6_ID <- data.frame(ID=unique(c(follow0.6$from, follow0.6$to)))
+follow0.7_ID <- data.frame(ID=unique(c(follow0.7$from, follow0.7$to)))
+follow0.8_ID <- data.frame(ID=unique(c(follow0.8$from, follow0.8$to)))
+follow0.9_ID <- data.frame(ID=unique(c(follow0.9$from, follow0.9$to)))
+
+follow0.1_igraph <-
+  graph_from_data_frame(d = follow0.1,
+                        vertices = follow0.1_ID,
+                        directed = TRUE)
+
+follow0.2_igraph <-
+  graph_from_data_frame(d = follow0.2,
+                        vertices = follow0.2_ID,
+                        directed = TRUE)
+
+follow0.3_igraph <-
+  graph_from_data_frame(d = follow0.3,
+                        vertices = follow0.3_ID,
+                        directed = TRUE)
+
+follow0.4_igraph <-
+  graph_from_data_frame(d = follow0.4,
+                        vertices = follow0.4_ID,
+                        directed = TRUE)
+
+follow0.5_igraph <-
+  graph_from_data_frame(d = follow0.5,
+                        vertices = follow0.5_ID,
+                        directed = TRUE)
+
+follow0.6_igraph <-
+  graph_from_data_frame(d = follow0.6,
+                        vertices = follow0.6_ID,
+                        directed = TRUE)
+
+follow0.7_igraph <-
+  graph_from_data_frame(d = follow0.7,
+                        vertices = follow0.7_ID,
+                        directed = TRUE)
+
+follow0.8_igraph <-
+  graph_from_data_frame(d = follow0.8,
+                        vertices = follow0.8_ID,
+                        directed = TRUE)
+
+follow0.9_igraph <-
+  graph_from_data_frame(d = follow0.9,
+                        vertices = follow0.9_ID,
+                        directed = TRUE)
+
+follow_value <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+
+# average degree
+follow_mean_degrees <- c(mean(igraph::degree(follow0.1_igraph, mode = "in")), mean(igraph::degree(follow0.2_igraph, mode = "in")), mean(igraph::degree(follow0.3_igraph, mode = "in")), mean(igraph::degree(follow0.4_igraph, mode = "in")), mean(igraph::degree(follow0.5_igraph, mode = "in")), mean(igraph::degree(follow0.6_igraph, mode = "in")), mean(igraph::degree(follow0.7_igraph, mode = "in")), mean(igraph::degree(follow0.8_igraph, mode = "in")), mean(igraph::degree(follow0.9_igraph, mode = "in")))
+
+# Avg. Path length 
+avg_path_list <- c(mean_distance(follow0.1_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.2_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.3_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.4_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.5_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.6_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.7_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.8_igraph, directed = TRUE, unconnected = TRUE), mean_distance(follow0.9_igraph, directed = TRUE, unconnected = TRUE))
+
+# transivity - how likely is it that a node is connected to its neighbor?
+transitivity_list <- c(transitivity(follow0.1_igraph, type = "average"), transitivity(follow0.2_igraph, type = "average"), transitivity(follow0.3_igraph, type = "average"), transitivity(follow0.4_igraph, type = "average"), transitivity(follow0.5_igraph, type = "average"), transitivity(follow0.6_igraph, type = "average"), transitivity(follow0.7_igraph, type = "average"), transitivity(follow0.8_igraph, type = "average"), transitivity(follow0.9_igraph, type = "average"))
+
+# reciprocity
+reciprocity_list <- c(reciprocity(follow0.1_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.2_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.3_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.4_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.5_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.6_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.7_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.8_igraph, ignore.loops = TRUE, mode = "default"), reciprocity(follow0.9_igraph, ignore.loops = TRUE, mode = "default"))
+
+follow_df <- data.frame("follow_value" = follow_value, "avg_degree_in" = follow_mean_degrees, "mean_path_length" = avg_path_list, "clusterinf" = transitivity_list, "reciprocity" = reciprocity_list)
+
+ggplot(follow_df, aes(x = follow_value, y = clusterinf)) +
+  geom_point() +
+  geom_line() +
+  ylim(0.4, 0.6) +
+  ylab("Transitivity") +
+  xlab("Value of 'follow'") +
+  theme_linedraw() +
+  ggsave("clustering.png", width = 8, height = 5)
+
+
+m_trans <- lm(clusterinf ~ follow_value, data = follow_df)
+summary(m_trans)
+
+```
+
+```{r}
+# Testing effects of like-value
+
+like0.1 <- read.csv("~/sockult_exam/abm_igen/edges_like01.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.2 <- read.csv("~/sockult_exam/abm_igen/edges_like02.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.3 <- read.csv("~/sockult_exam/abm_igen/edges_like03.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.4 <- read.csv("~/sockult_exam/abm_igen/edges_like04.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.5 <- read.csv("~/sockult_exam/abm_igen/edges_like05.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.6 <- read.csv("~/sockult_exam/abm_igen/edges_like06.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.7 <- read.csv("~/sockult_exam/abm_igen/edges_like07.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.8 <- read.csv("~/sockult_exam/abm_igen/edges_like08.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+like0.9 <- read.csv("~/sockult_exam/abm_igen/edges_like09.csv") %>% select(c("from" = Source, "to" = Target, "type" = Type, "id" = Id, "weight" = Weight))
+
+like0.1_ID <- data.frame(ID=unique(c(like0.1$from, like0.1$to)))
+like0.2_ID <- data.frame(ID=unique(c(like0.2$from, like0.2$to)))
+like0.3_ID <- data.frame(ID=unique(c(like0.3$from, like0.3$to)))
+like0.4_ID <- data.frame(ID=unique(c(like0.4$from, like0.4$to)))
+like0.5_ID <- data.frame(ID=unique(c(like0.5$from, like0.5$to)))
+like0.6_ID <- data.frame(ID=unique(c(like0.6$from, like0.6$to)))
+like0.7_ID <- data.frame(ID=unique(c(like0.7$from, like0.7$to)))
+like0.8_ID <- data.frame(ID=unique(c(like0.8$from, like0.8$to)))
+like0.9_ID <- data.frame(ID=unique(c(like0.9$from, like0.9$to)))
+
+like0.1_igraph <-
+  graph_from_data_frame(d = like0.1,
+                        vertices = like0.1_ID,
+                        directed = TRUE)
+
+like0.2_igraph <-
+  graph_from_data_frame(d = like0.2,
+                        vertices = like0.2_ID,
+                        directed = TRUE)
+
+like0.3_igraph <-
+  graph_from_data_frame(d = like0.3,
+                        vertices = like0.3_ID,
+                        directed = TRUE)
+
+like0.4_igraph <-
+  graph_from_data_frame(d = like0.4,
+                        vertices = like0.4_ID,
+                        directed = TRUE)
+
+like0.5_igraph <-
+  graph_from_data_frame(d = like0.5,
+                        vertices = like0.5_ID,
+                        directed = TRUE)
+
+like0.6_igraph <-
+  graph_from_data_frame(d = like0.6,
+                        vertices = like0.6_ID,
+                        directed = TRUE)
+
+like0.7_igraph <-
+  graph_from_data_frame(d = like0.7,
+                        vertices = like0.7_ID,
+                        directed = TRUE)
+
+like0.8_igraph <-
+  graph_from_data_frame(d = like0.8,
+                        vertices = like0.8_ID,
+                        directed = TRUE)
+
+like0.9_igraph <-
+  graph_from_data_frame(d = like0.9,
+                        vertices = like0.9_ID,
+                        directed = TRUE)
+
+list_values <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
+
+transitivity_list_likes <- c(transitivity(like0.1_igraph, type = "average"), transitivity(like0.2_igraph, type = "average"), transitivity(like0.3_igraph, type = "average"), transitivity(like0.4_igraph, type = "average"), transitivity(like0.5_igraph, type = "average"), transitivity(like0.6_igraph, type = "average"), transitivity(like0.7_igraph, type = "average"), transitivity(like0.8_igraph, type = "average"), transitivity(like0.9_igraph, type = "average"))
+
+like_df <- data.frame("like_value" = list_values, "transitivity" = transitivity_list_likes)
+
+l_trans <- lm(transitivity ~ like_value, data = like_df)
+summary(l_trans)
+
+ggplot(like_df, aes(x = like_value, y = transitivity)) +
+  geom_point() +
+  geom_line() +
+  ylab("Transitivity") +
+  xlab("Value of 'like'") +
+  theme_linedraw()
+
+```
